@@ -1,10 +1,9 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'login',
     pathMatch: 'full',
   },
   {
@@ -13,13 +12,13 @@ export const routes: Routes = [
       import('./features/auth/login/login.component').then(m => m.LoginComponent),
   },
   {
+    path: 'extraction',
+    loadComponent: () =>
+      import('./features/extraction/extraction.component').then(m => m.ExtractionComponent),
+  },
+  {
     path: 'dashboard',
     loadComponent: () =>
       import('./features/dashboard/dashboard.component').then(m => m.DashboardComponent),
-    canActivate: [authGuard],
   },
-  // Future feature routes:
-  // { path: 'extraction', loadComponent: () => import(...), canActivate: [authGuard] },
-  // { path: 'workbook', loadComponent: () => import(...), canActivate: [authGuard] },
-  // { path: 'jobs', loadComponent: () => import(...), canActivate: [authGuard] },
 ];

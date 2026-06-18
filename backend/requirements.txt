@@ -18,6 +18,7 @@ alembic==1.14.0
 # Authentication
 python-jose[cryptography]==3.3.0
 passlib[bcrypt]==1.7.4
+bcrypt==4.0.1
 
 # Logging
 structlog==24.4.0
@@ -25,13 +26,12 @@ structlog==24.4.0
 # HTTP client
 httpx==0.28.0
 
-# Future: PDF extraction (uncomment when needed)
-# camelot-py[cv]==0.11.0
-# pdfplumber==0.11.0
-# PyMuPDF==1.24.0
+# PDF extraction
+pdfplumber==0.11.10
+PyMuPDF==1.27.2.3
 
-# Future: Workbook generation (uncomment when needed)
-# openpyxl==3.1.5
+# Workbook generation
+openpyxl==3.1.5
 
 # Future: Async infrastructure (uncomment when needed)
 # celery[redis]==5.4.0

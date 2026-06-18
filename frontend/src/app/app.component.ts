@@ -5,16 +5,8 @@ import { RouterOutlet } from '@angular/router';
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet],
-  template: `
-    <main class="app-container">
-      <router-outlet />
-    </main>
-  `,
-  styles: [`
-    .app-container {
-      min-height: 100vh;
-    }
-  `],
+  templateUrl: './app.component.html',
+  styleUrl: './app.component.scss',
 })
 export class AppComponent {
   title = 'BalanceIQ';

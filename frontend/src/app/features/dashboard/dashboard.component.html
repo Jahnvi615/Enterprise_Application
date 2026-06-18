@@ -1,0 +1,13 @@
+<div class="dashboard">
+  <header class="dashboard-header">
+    <h1>BalanceIQ</h1>
+    <div class="header-actions">
+      <span class="user-info">{{ authService.user()?.email }}</span>
+      <button (click)="logout()">Logout</button>
+    </div>
+  </header>
+  <main class="dashboard-content">
+    <h2>Dashboard</h2>
+    <p>Financial data extraction platform ready.</p>
+  </main>
+</div>

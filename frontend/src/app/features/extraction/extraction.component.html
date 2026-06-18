@@ -1,0 +1,102 @@
+<div class="extraction-page">
+  <header class="page-header">
+    <h1>BalanceIQ</h1>
+    <p>Intelligent Financial Statement Processing</p>
+  </header>
+
+  <div class="upload-section">
+    <div class="upload-card">
+      <h2>Upload Files</h2>
+
+      <div class="file-input">
+        <label>Financial PDF <span class="required">*</span></label>
+        <div class="drop-zone" (click)="pdfInput.click()" [class.has-file]="pdfFile">
+          @if (pdfFile) {
+            <span class="file-name">{{ pdfFile.name }}</span>
+          } @else {
+            <span>Click to select PDF</span>
+          }
+        </div>
+        <input #pdfInput type="file" accept=".pdf" hidden (change)="onPdfSelected($event)" />
+      </div>
+
+      <div class="file-input">
+        <label>Template XLSM <span class="optional">(optional)</span></label>
+        <div class="drop-zone" (click)="templateInput.click()" [class.has-file]="templateFile">
+          @if (templateFile) {
+            <span class="file-name">{{ templateFile.name }}</span>
+          } @else {
+            <span>Click to select XLSM template</span>
+          }
+        </div>
+        <input #templateInput type="file" accept=".xlsm,.xlsx" hidden (change)="onTemplateSelected($event)" />
+      </div>
+
+      <button class="extract-btn" (click)="extract()" [disabled]="!pdfFile || loading">
+        {{ loading ? 'Extracting...' : 'Extract & Generate' }}
+      </button>
+
+      @if (error) {
+        <div class="error-msg">{{ error }}</div>
+      }
+    </div>
+
+    @if (result) {
+      <div class="result-card">
+        <h2>Extraction Result</h2>
+
+        <div class="result-meta">
+          <div class="meta-item">
+            <span class="meta-label">Job ID</span>
+            <span class="meta-value">{{ result.job_id }}</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-label">Statements Found</span>
+            <span class="meta-value">{{ result.statements_extracted.join(', ') }}</span>
+          </div>
+        </div>
+
+        <div class="pages-detected">
+          <h3>Pages Detected</h3>
+          @for (entry of getPageEntries(); track entry.key) {
+            <div class="page-item">
+              <span>{{ formatStatementName(entry.key) }}</span>
+              <span class="page-num">
+                {{ entry.value ? 'Page ' + entry.value : 'Not found' }}
+              </span>
+            </div>
+          }
+        </div>
+
+        @for (entry of getSummaryEntries(); track entry.key) {
+          <div class="summary-section">
+            <h3>{{ formatStatementName(entry.key) }}</h3>
+            <div class="summary-grid">
+              <div class="summary-item">
+                <span class="num">{{ entry.value.row_count }}</span>
+                <span class="lbl">Total Rows</span>
+              </div>
+              <div class="summary-item">
+                <span class="num">{{ entry.value.line_items }}</span>
+                <span class="lbl">Line Items</span>
+              </div>
+              <div class="summary-item">
+                <span class="num">{{ entry.value.periods.length }}</span>
+                <span class="lbl">Periods</span>
+              </div>
+            </div>
+            <div class="periods">
+              @for (p of entry.value.periods; track p) {
+                <span class="period-tag">{{ p }}</span>
+              }
+            </div>
+          </div>
+        }
+
+        <button class="download-btn" (click)="download()">
+          Download Workbook
+        </button>
+      </div>
+    }
+  </div>
+</div>
