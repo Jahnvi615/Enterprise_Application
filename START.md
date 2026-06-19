@@ -4,6 +4,7 @@
 - Python 3.10+
 - Node.js 18+
 - npm 9+
+- Angular 20
 
 ## First Time Setup
 

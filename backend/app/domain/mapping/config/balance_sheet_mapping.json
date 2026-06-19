@@ -1,0 +1,475 @@
+{
+  "Current Assets": {
+    "Cash & Equivalents (CDs, MMA)": [
+      "cash and cash equivalents",
+      "cash",
+      "certificate of deposit",
+      "time deposit",
+      "fixed deposit",
+      "certificates of deposit",
+      "cash and bank balances",
+      "fixed deposits with banks",
+      "bank and cash balances"
+    ],
+    "Restricted Cash": [
+      "restricted cash",
+      "pledged cash",
+      "pledged bank deposits"
+    ],
+    "Marketable Securities": [
+      "marketable securities",
+      "investments in equity securities",
+      "investments",
+      "short-term financial instruments",
+      "financial assets at fair value through profit or loss",
+      "investments - marketable securities"
+    ],
+    "Accounts Receivable": [
+      "trade receivables",
+      "accounts receivable",
+      "accounts receivable net",
+      "contract receivables net",
+      "construction contract receivables net",
+      "contract receivables net of allowance for doubtful accounts",
+      "trade and other receivables",
+      "current contract receivable",
+      "contracts receivable and retention net",
+      "unbilled costs on time and materials contracts",
+      "debtors deposits and prepayments",
+      "contract receivables",
+      "trade net of allowance"
+    ],
+    "Costs & Earnings in Excess of Billings": [
+      "costs and estimated earnings in excess of billings",
+      "costs and estimated earnings in excess of billings on uncompleted contracts",
+      "earnings in excess of billing",
+      "excess cost and recognized profit",
+      "amounts due from customers under construction contracts of progress billings",
+      "contract assets",
+      "gross amount due from customers",
+      "costs and estimated earnings in excess of billings on contracts in progress",
+      "contract work in progress"
+    ],
+    "Retainage Receivable": [
+      "retainage receivable",
+      "retainage percentages",
+      "contract retainage receivable",
+      "retainage"
+    ],
+    "Prepaid Expenses": [
+      "prepaid expenses",
+      "prepaid and other",
+      "prepaid expenses and other current assets",
+      "prepaid expense & other",
+      "prepaid expenses and other",
+      "prepaid expenses and other current assets",
+      "prepayments"
+    ],
+    "Cash Surrender Value Life  Ins. (CSVLI)": [
+      "cash surrender value of corporate-owned life insurance",
+      "cash surrender value of whole life insurance policies"
+    ],
+    "A/R Related Parties": [
+      "due from affiliates",
+      "current portion of advances to related parties",
+      "amounts due from associates",
+      "amounts due from joint ventures"
+    ],
+    "Inventories": [
+      "inventories",
+      "work in-process",
+      "construction materials and supplies"
+    ],
+    "Advances To / Equity In JV's": [
+      "equity in and advances to joint ventures",
+      "investment in joint ventures",
+      "investment in joint ventures net"
+    ],
+    "Other Current Assets": [
+      "loans and advances",
+      "other financial assets",
+      "refundable income taxes",
+      "current tax assets",
+      "income tax receivable",
+      "deferred income taxes",
+      "other current assets",
+      "other",
+      "other receivables",
+      "due from shareholders members and employees",
+      "investments in subsidiaries joint ventures and associates",
+      "notes receivable",
+      "notes receivable - related parties",
+      "deposits",
+      "employee loan and misc. receivable",
+      "employee loan receivable",
+      "income taxes receivable",
+      "other current",
+      "assets held for sale"
+    ]
+  },
+  "Noncurrent Assets": {
+    "Available for Sale Assets": [
+      "available for sale assets",
+      "available-for-sale financial assets"
+    ],
+    "Marketable Securities": [
+      "marketable securities",
+      "long-term financial assets at fair value through profit or loss"
+    ],
+    "Prepaid Expenses": [
+      "prepaid expenses",
+      "prepaid land lease payments"
+    ],
+    "Accounts Receivable (Slow or Other)": [
+      "accounts receivable",
+      "long-term trade and other receivables"
+    ],
+    "Property, Plant & Equipment Net": [
+      "property plant and equipment",
+      "property plant and equipment - net",
+      "property and equipment net",
+      "pp&e net",
+      "pp&e",
+      "ppe net",
+      "ppe",
+      "fixed assets",
+      "total fixed assets",
+      "property and equipments",
+      "equipment and leasehold improvements net",
+      "fixed assets net of accumulated depreciation"
+    ],
+    "Notes Receivable - Related Parties": [
+      "notes receivable - related parties",
+      "note receivable from affiliate",
+      "short term shareholder notes"
+    ],
+    "Notes Receivable - Other": [
+      "notes receivable"
+    ],
+    "Goodwill": [
+      "goodwill",
+      "goodwill net"
+    ],
+    "Intangible Assets": [
+      "other intangible assets",
+      "intangible assets net",
+      "intangible assets under development",
+      "intangible assets",
+      "intangible and other assets",
+      "club membership"
+    ],
+    "Deferred Tax Assets": [
+      "deferred tax asset",
+      "deferred tax",
+      "deferred tax assets",
+      "deferred income taxes",
+      "net deferred tax assets",
+      "deferred income tax assets"
+    ],
+    "Other Non-Current Assets": [
+      "loans and advances",
+      "other non-current assets",
+      "other",
+      "security deposit",
+      "due from shareholders members and employees",
+      "loan to stockholder",
+      "deferred expenses and other assets",
+      "other assets",
+      "deposits",
+      "firm commitment assets",
+      "other non-current assets",
+      "currency forward assets",
+      "restricted assets",
+      "long term loan to a subsidiary"
+    ],
+    "A/R Related Parties": [
+      "due from affiliates",
+      "advances to related parties less current portion",
+      "interests in joint ventures",
+      "interests in associates",
+      "loan due from an associate",
+      "due from stockholder net"
+    ],
+    "Inventories": [
+      "inventories"
+    ],
+    "Investment/Other Financial Asset": [
+      "investments in subsidiaries joint ventures and associates",
+      "investments in subsidiaries and affiliates",
+      "investments",
+      "investment in partnerships",
+      "investment in unconsolidated entity at fair value",
+      "investment properties",
+      "long-term financial instruments",
+      "held-to-maturity financial assets",
+      "investment in associates and joint ventures",
+      "investment properties",
+      "investment property",
+      "investment in subsidiary",
+      "investment in llc",
+      "available-for-sale financial assets",
+      "investment in jvs",
+      "equity accounted investments",
+      "investment in subsidiaries",
+      "investments in joint ventures and others"
+    ],
+    "Cash Surrender Value Life  Ins. (CSVLI)": [
+      "cash surrender value of corporate-owned life insurance",
+      "cash surrender value of whole life insurance policies"
+    ],
+    "Restricted Cash": [
+      "restricted cash",
+      "pledged cash"
+    ]
+  },
+  "Current Liabilities": {
+    "Accounts Payable": [
+      "trade payables",
+      "accounts payable",
+      "accounts and subcontracts payable",
+      "accounts payable and accrued expenses",
+      "trade and other payables",
+      "accounts payable and accrued liabilities"
+    ],
+    "Retainage Payable": [
+      "retained percentages",
+      "retainage payable",
+      "subcontractors and retentions payable"
+    ],
+    "Bank Line of Credit": [
+      "bank line of credit",
+      "bank lines of credit",
+      "revolving credit facility",
+      "line of credit",
+      "bank overdraft",
+      "checks issued in excess of bank balance"
+    ],
+    "Current Portion of Long Term Debt": [
+      "current portion of long-term debt",
+      "current maturities of long-term debt",
+      "current instalments of long-term debt",
+      "notes payable",
+      "notes payable current",
+      "short-term borrowings",
+      "current debentures",
+      "term loans",
+      "loans and borrowings",
+      "borrowings",
+      "interest-bearing liabilities",
+      "borrowings secured",
+      "bank indebtedness",
+      "subordinated note payments",
+      "current portion of subordinated notes payable"
+    ],
+    "Billings in Excess of Cost & Earnings": [
+      "billings in excess of costs and estimated profits on uncompleted contracts",
+      "billings in excess of costs and estimated earnings",
+      "billings in excess of costs and estimated earnings on uncompleted contracts",
+      "billings in excess of earned revenue",
+      "excess billings",
+      "due to customers under construction contracts",
+      "contract liabilities",
+      "gross amount due to customers",
+      "billings in excess of costs and estimated earnings on contracts in progress",
+      "contract work in progress"
+    ],
+    "Accrued Expenses": [
+      "accrued expenses",
+      "accrued liabilities",
+      "accrued salaries and payroll liabilities",
+      "accrued payroll vacation and payroll taxes",
+      "accrued payroll and related taxes",
+      "accrued insurance expense",
+      "other accrued liabilities",
+      "incentive compensation deferral",
+      "creditors and accrued charges"
+    ],
+    "Lease Obligations": [
+      "lease obligations",
+      "current portion of obligations under capital leases",
+      "current instalments of capital leases",
+      "finance leases",
+      "obligation under finance leases"
+    ],
+    "Income Tax Liability": [
+      "accrued income taxes",
+      "current tax liabilities",
+      "income taxes payable",
+      "corporate federal tax payable",
+      "income tax payable",
+      "business taxes payable and other current liabilities",
+      "provision for taxation",
+      "state income and excise taxes payable"
+    ],
+    "Related Party Payables": [
+      "due to affiliates",
+      "due to related party",
+      "amounts due to associates",
+      "amounts due to joint ventures"
+    ],
+    "Advances from Customers": [
+      "advances from customers"
+    ],
+    "Other Current Liabilities": [
+      "current maturities of notes payable to related parties",
+      "investment in joint ventures",
+      "provisions",
+      "provision for losses on contracts in progress",
+      "provisions for losses on uncompleted contracts",
+      "reserves for losses on uncompleted contracts",
+      "other financial liabilities",
+      "distributions payable",
+      "other current liabilities",
+      "financial liabilities at fair value through profit or loss",
+      "current financial guarantee liabilities",
+      "current provisions",
+      "current firm commitment liabilities",
+      "current currency forward liabilities",
+      "liabilities held for sale",
+      "provision for warranty costs",
+      "provision for income tax",
+      "other payables"
+    ]
+  },
+  "Noncurrent Liabilities": {
+    "Long-Term Debt": [
+      "long-term debt",
+      "long-term debt less current portion",
+      "long-term debt net of current maturities",
+      "long-term debt less current maturities",
+      "long-term debt net of current instalments",
+      "long-term debt net of current portion",
+      "working capital loan",
+      "notes payable",
+      "notes payable net of current",
+      "debentures",
+      "long-term borrowings",
+      "long-term debt and capital leases - net of current portion",
+      "term loans",
+      "loans and borrowings",
+      "interest-bearing liabilities",
+      "obligation under finance leases",
+      "long term loan",
+      "subordinated notes payable less current maturities",
+      "subordinated notes payable less current maturities"
+    ],
+    "Deferred Compensation": [
+      "deferred compensation and other liabilities",
+      "deferred incentive compensation",
+      "net defined benefit liabilities",
+      "employee entitlements"
+    ],
+    "Deferred Tax": [
+      "deferred taxes",
+      "deferred tax",
+      "deferred tax liabilities",
+      "deferred income taxes",
+      "federal deferred income tax",
+      "state deferred income tax",
+      "tax liabilities",
+      "state income and excise taxes payable"
+    ],
+    "Other Long-Term Liabilities": [
+      "other noncurrent liabilities",
+      "other non-current liabilities",
+      "other financial liabilities",
+      "accrued insurance",
+      "provisions",
+      "shareholder payable",
+      "obligations under capital leases",
+      "long-term capital leases net of current instalments",
+      "assigned contracts payable",
+      "deferred income",
+      "derivative instruments",
+      "notes payable to related parties less current maturities",
+      "other non current liabilities",
+      "deferred rent and rent deposits",
+      "long-term financial liabilities at fair value through profit or loss",
+      "long-term trade and other payables",
+      "financial guarantee liabilities",
+      "firm commitment liabilities",
+      "currency forward liabilities",
+      "other liabilities",
+      "accrued stock warrant liability",
+      "other non-current liabilities"
+    ],
+    "Due to Consolidated JV /  Non-controlling Interest": [
+      "noncontrolling interest",
+      "noncontrolling interest in subsidiaries",
+      "minority interest"
+    ],
+    "Contingent consideration": [
+      "employee entitlements",
+      "provisions",
+      "other liabilities",
+      "accrued loss on uncompleted contracts"
+    ]
+  },
+  "Equity": {
+    "Capital Stock": [
+      "capital stock",
+      "common stock",
+      "share capital",
+      "issued capital"
+    ],
+    "Preferred Stock": [
+      "preferred stock",
+      "preferred shares"
+    ],
+    "Treasury Stock": [
+      "treasury stock",
+      "hybrid bond",
+      "revaluation reserve",
+      "treasury stock - at cost",
+      "capital reserve",
+      "unearned esop shares"
+    ],
+    "Additional Paid In Capital": [
+      "paid-in capital",
+      "additional paid in capital",
+      "additional paid-in capital",
+      "apic",
+      "other paid-in capital"
+    ],
+    "Retained Earnings (Deficit)": [
+      "retained earnings",
+      "current profit",
+      "current profit & loss",
+      "distributions",
+      "net income",
+      "retained earnings",
+      "retained earnings",
+      "retained earnings",
+      "reserves",
+      "accumulated profits"
+    ],
+    "LLC Members Equity": [
+      "members equity",
+      "contributed capital",
+      "non-controlling interest",
+      "noncontrolling interest",
+      "nci",
+      "noncontrolling interest in consolidated subsidiary",
+      "minority interest",
+      "partners capital",
+      "equity attributable to owners of the company",
+      "llc members contribution"
+    ],
+    "Other Comprehensive Income (Loss)": [
+      "accumulated other comprehensive income",
+      "accumulated other comprehensive income loss",
+      "accumulated other comprehensive loss",
+      "aoci",
+      "oci",
+      "notes receivable from stockholders",
+      "other comprehensive income",
+      "other components of equity",
+      "fair value reserve",
+      "reserves"
+    ],
+    "Foreign Currency Adjustment": [
+      "translation reserve",
+      "currency translation reserve"
+    ]
+  }
+}

@@ -12,6 +12,7 @@ SECTION_FILL = PatternFill(start_color="D6E4F0", end_color="D6E4F0", fill_type="
 TOTAL_FONT = Font(name="Calibri", size=10, bold=True, color="FFFFFF")
 TOTAL_FILL = PatternFill(start_color="2B6CB0", end_color="2B6CB0", fill_type="solid")
 DATA_FONT = Font(name="Calibri", size=10)
+UNMAPPED_FONT = Font(name="Calibri", size=10, color="E53E3E")
 
 BORDER_BOTTOM = Border(bottom=Side(style="thin", color="D9D9D9"))
 BORDER_TOTAL = Border(
@@ -28,7 +29,8 @@ def generate_sample_workbook(extraction_results: dict, output_path: str) -> str:
 
     for statement_type, data in extraction_results.items():
         sheet_name = _get_sheet_name(statement_type)
-        _create_sheet(wb, sheet_name, data)
+        has_mapping = any("mapped_category" in r for r in data.get("rows", []))
+        _create_sheet(wb, sheet_name, data, has_mapping)
 
     wb.save(output_path)
     logger.info("sample_workbook_generated", path=output_path)
@@ -43,18 +45,16 @@ def _get_sheet_name(statement_type: str) -> str:
     return names.get(statement_type, statement_type)
 
 
-def _create_sheet(wb: Workbook, sheet_name: str, data: dict):
+def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_mapping: bool):
     ws = wb.create_sheet(title=sheet_name)
     periods = data.get("periods", [])
     rows = data.get("rows", [])
 
-    headers = [
-        "Source Label",
-        "Section",
-        "Row Type",
-        "Is Non-Mappable",
-        "Mapped Category",
-    ] + periods
+    headers = ["Source Label"]
+    if has_mapping:
+        headers.append("Normalized Label")
+    headers += ["Section", "Row Type", "Is Non-Mappable", "Mapped Category"]
+    headers += periods
 
     for col_idx, header in enumerate(headers, 1):
         cell = ws.cell(row=1, column=col_idx, value=header)
@@ -64,27 +64,41 @@ def _create_sheet(wb: Workbook, sheet_name: str, data: dict):
 
     ws.row_dimensions[1].height = 28
 
+    period_start_col = len(headers) - len(periods) + 1
+
     for row_idx, row_data in enumerate(rows, 2):
         row_type = row_data["row_type"]
         is_section = row_type == "section_header"
         is_total = row_type == "total"
 
-        ws.cell(row=row_idx, column=1, value=row_data["source_label"])
-        ws.cell(row=row_idx, column=2, value=row_data["section"])
-        ws.cell(row=row_idx, column=3, value=row_type)
-        ws.cell(row=row_idx, column=4, value=row_data["is_non_mappable"])
-        ws.cell(row=row_idx, column=5, value="")
+        col = 1
+        ws.cell(row=row_idx, column=col, value=row_data["source_label"])
+        col += 1
+
+        if has_mapping:
+            ws.cell(row=row_idx, column=col, value=row_data.get("normalized_label", ""))
+            col += 1
+
+        ws.cell(row=row_idx, column=col, value=row_data["section"])
+        col += 1
+        ws.cell(row=row_idx, column=col, value=row_type)
+        col += 1
+        ws.cell(row=row_idx, column=col, value=row_data["is_non_mappable"])
+        col += 1
+
+        mapped_category = row_data.get("mapped_category", "")
+        mapped_cell = ws.cell(row=row_idx, column=col, value=mapped_category)
+        col += 1
 
         for period_idx, period in enumerate(periods):
             value = row_data["values"].get(period)
-            val_cell = ws.cell(row=row_idx, column=6 + period_idx, value=value)
+            val_cell = ws.cell(row=row_idx, column=period_start_col + period_idx, value=value)
             if value is not None:
                 val_cell.number_format = NUMBER_FORMAT
                 val_cell.alignment = Alignment(horizontal="right")
 
-        for col_idx in range(1, len(headers) + 1):
-            cell = ws.cell(row=row_idx, column=col_idx)
-
+        for c in range(1, len(headers) + 1):
+            cell = ws.cell(row=row_idx, column=c)
             if is_section:
                 cell.font = SECTION_FONT
                 cell.fill = SECTION_FILL
@@ -100,14 +114,25 @@ def _create_sheet(wb: Workbook, sheet_name: str, data: dict):
         if not is_section and not is_total:
             ws.cell(row=row_idx, column=1).alignment = Alignment(indent=2)
 
-    ws.column_dimensions["A"].width = 65
-    ws.column_dimensions["B"].width = 25
-    ws.column_dimensions["C"].width = 16
-    ws.column_dimensions["D"].width = 16
-    ws.column_dimensions["E"].width = 20
+        if mapped_category == "UNMAPPED" and not is_section and not is_total:
+            mapped_cell.font = UNMAPPED_FONT
+
+    col_idx = 1
+    ws.column_dimensions[get_column_letter(col_idx)].width = 65
+    col_idx += 1
+    if has_mapping:
+        ws.column_dimensions[get_column_letter(col_idx)].width = 45
+        col_idx += 1
+    ws.column_dimensions[get_column_letter(col_idx)].width = 25
+    col_idx += 1
+    ws.column_dimensions[get_column_letter(col_idx)].width = 16
+    col_idx += 1
+    ws.column_dimensions[get_column_letter(col_idx)].width = 16
+    col_idx += 1
+    ws.column_dimensions[get_column_letter(col_idx)].width = 30
+    col_idx += 1
     for i in range(len(periods)):
-        col_letter = get_column_letter(6 + i)
-        ws.column_dimensions[col_letter].width = 24
+        ws.column_dimensions[get_column_letter(col_idx + i)].width = 24
 
     ws.freeze_panes = "A2"
     ws.sheet_properties.tabColor = "1F4E79"

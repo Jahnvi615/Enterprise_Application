@@ -5,6 +5,7 @@ import pdfplumber
 from app.core.interfaces import StorageInterface
 from app.domain.extraction.detector import detect_pages
 from app.domain.extraction.parser import extract_table
+from app.domain.mapping.service import MappingService
 from app.domain.workbook_generation.sample_output import generate_sample_workbook
 from app.exceptions import AppException
 import structlog
@@ -48,6 +49,12 @@ class ExtractionService:
                     pages["cash_flow"],
                     "cash_flow",
                 )
+
+        if "balance_sheet" in extraction_results:
+            mapping_service = MappingService()
+            extraction_results["balance_sheet"] = mapping_service.apply(
+                extraction_results["balance_sheet"]
+            )
 
         output_filename = f"{safe_name}_extracted_{job_id}.xlsx"
         output_rel_path = f"outputs/{output_filename}"
