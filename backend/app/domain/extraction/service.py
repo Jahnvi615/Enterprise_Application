@@ -7,6 +7,7 @@ from app.domain.extraction.detector import detect_pages
 from app.domain.extraction.parser import extract_table
 from app.domain.mapping.service import MappingService
 from app.domain.workbook_generation.sample_output import generate_sample_workbook
+from app.domain.workbook_generation.template_population import TemplatePopulationService
 from app.exceptions import AppException
 import structlog
 
@@ -23,8 +24,9 @@ class ExtractionService:
 
         pdf_path = self._save_temp_file(pdf_bytes, f"uploads/{job_id}_{safe_name}.pdf")
 
+        template_path = None
         if template_bytes:
-            self._save_temp_file(template_bytes, f"uploads/{job_id}_template.xlsm")
+            template_path = self._save_temp_file(template_bytes, f"uploads/{job_id}_template.xlsm")
 
         logger.info("extraction_started", job_id=job_id, pdf=pdf_filename)
 
@@ -63,9 +65,21 @@ class ExtractionService:
         os.makedirs(os.path.dirname(output_abs_path), exist_ok=True)
         generate_sample_workbook(extraction_results, output_abs_path)
 
+        template_output_filename = None
+        if template_path and "balance_sheet" in extraction_results:
+            template_output_filename = f"{safe_name}_populated_{job_id}.xlsm"
+            template_output_path = self._get_abs_path(f"outputs/{template_output_filename}")
+
+            template_service = TemplatePopulationService()
+            template_service.process(
+                template_path=template_path,
+                extraction_data=extraction_results["balance_sheet"],
+                output_path=template_output_path,
+            )
+
         logger.info("extraction_completed", job_id=job_id, output=output_filename)
 
-        return {
+        result = {
             "job_id": job_id,
             "detected_pages": {
                 k: v + 1 if v is not None else None
@@ -85,6 +99,11 @@ class ExtractionService:
                 for statement, data in extraction_results.items()
             },
         }
+
+        if template_output_filename:
+            result["template_output_filename"] = template_output_filename
+
+        return result
 
     def get_output_path(self, rel_path: str) -> str:
         return self._get_abs_path(rel_path)

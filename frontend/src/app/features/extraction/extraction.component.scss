@@ -213,4 +213,13 @@ h3 {
   &:hover {
     background: #2f855a;
   }
+
+  &.template-btn {
+    background: #2b6cb0;
+    margin-top: 0.5rem;
+
+    &:hover {
+      background: #2c5282;
+    }
+  }
 }

@@ -14,6 +14,7 @@ interface ExtractionResponse {
   detected_pages: Record<string, number | null>;
   statements_extracted: string[];
   output_filename: string;
+  template_output_filename: string | null;
   summary: Record<string, ExtractionSummary>;
 }
 
@@ -73,6 +74,12 @@ export class ExtractionComponent {
   download(): void {
     if (!this.result) return;
     const url = `${environment.apiUrl}/extraction/download/${this.result.output_filename}`;
+    window.open(url, '_blank');
+  }
+
+  downloadTemplate(): void {
+    if (!this.result?.template_output_filename) return;
+    const url = `${environment.apiUrl}/extraction/download/${this.result.template_output_filename}`;
     window.open(url, '_blank');
   }
 

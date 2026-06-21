@@ -94,8 +94,13 @@
         }
 
         <button class="download-btn" (click)="download()">
-          Download Workbook
+          Download Extraction Workbook
         </button>
+        @if (result.template_output_filename) {
+          <button class="download-btn template-btn" (click)="downloadTemplate()">
+            Download Populated Template
+          </button>
+        }
       </div>
     }
   </div>

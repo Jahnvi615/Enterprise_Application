@@ -12,4 +12,5 @@ class ExtractionResponse(BaseModel):
     detected_pages: dict[str, int | None]
     statements_extracted: list[str]
     output_filename: str
+    template_output_filename: str | None = None
     summary: dict[str, ExtractionSummary]
