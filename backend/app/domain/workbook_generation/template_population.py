@@ -55,6 +55,7 @@ class TemplatePopulationService:
 
         ws.insert_cols(INSERT_COL, amount=INSERT_COUNT)
         self._fix_shifted_formulas(ws)
+        self._fix_cross_sheet_references(wb, BALANCE_SHEET_NAME, INSERT_COL, INSERT_COUNT)
         self._fix_header_merges(ws, header_merges)
 
         self._style_new_columns(ws)
@@ -187,6 +188,42 @@ class TemplatePopulationService:
             replace_ref,
             formula,
         )
+
+    def _fix_cross_sheet_references(self, wb, modified_sheet: str, insert_col: int, insert_count: int):
+        escaped_name = re.escape(modified_sheet)
+        pattern = re.compile(
+            r"('{0}'!|{0}!)(\$?)([A-Z]{{1,3}})(\$?)(\d+)".format(escaped_name)
+        )
+
+        def shift_match(match):
+            sheet_ref = match.group(1)
+            dollar_col = match.group(2)
+            col_str = match.group(3)
+            dollar_row = match.group(4)
+            row_num = match.group(5)
+
+            col_idx = column_index_from_string(col_str)
+            if col_idx >= insert_col:
+                col_idx += insert_count
+                col_str = get_column_letter(col_idx)
+
+            return f"{sheet_ref}{dollar_col}{col_str}{dollar_row}{row_num}"
+
+        fixed_count = 0
+        for sheet_name in wb.sheetnames:
+            if sheet_name == modified_sheet:
+                continue
+            ws = wb[sheet_name]
+            for row in ws.iter_rows(min_row=1, max_row=ws.max_row,
+                                    min_col=1, max_col=ws.max_column):
+                for cell in row:
+                    if cell.value and isinstance(cell.value, str) and cell.value.startswith("="):
+                        new_val = pattern.sub(shift_match, cell.value)
+                        if new_val != cell.value:
+                            cell.value = new_val
+                            fixed_count += 1
+
+        logger.info("cross_sheet_references_fixed", modified_sheet=modified_sheet, refs_updated=fixed_count)
 
     def _style_new_columns(self, ws):
         src_as_given = INSERT_COL + INSERT_COUNT
