@@ -5,6 +5,7 @@ import shutil
 from datetime import datetime
 from openpyxl import load_workbook
 from openpyxl.utils import get_column_letter, column_index_from_string
+from app.domain.business_rules.service import SpreadingRulesService
 import structlog
 
 logger = structlog.get_logger()
@@ -61,6 +62,15 @@ class TemplatePopulationService:
         self._style_new_columns(ws)
         self._set_new_column_headers(ws, period)
         populated = self._populate_values(ws, values_by_section_category)
+
+        spreading_service = SpreadingRulesService()
+        spreading_service.apply(
+            ws,
+            as_given_col=INSERT_COL,
+            as_allowed_col=INSERT_COL + 1,
+            remarks_col=INSERT_COL + 2,
+        )
+
         self._propagate_total_formulas(ws)
 
         wb.save(output_path)
@@ -253,7 +263,6 @@ class TemplatePopulationService:
 
     def _populate_values(self, ws, values_by_section_category: dict) -> int:
         populated = 0
-        as_given_letter = get_column_letter(INSERT_COL)
         current_section = ""
 
         for row_idx in range(DATA_START_ROW, ws.max_row + 1):
@@ -276,11 +285,6 @@ class TemplatePopulationService:
                 value = values_by_section_category[key]
                 scaled_value = value * 1000
                 ws.cell(row=row_idx, column=INSERT_COL, value=scaled_value)
-                ws.cell(
-                    row=row_idx,
-                    column=INSERT_COL + 1,
-                    value=f"={as_given_letter}{row_idx}*1",
-                )
                 populated += 1
                 logger.debug(
                     "value_populated",

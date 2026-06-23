@@ -1,0 +1,277 @@
+{
+  "current_assets": {
+    "Cash & Equivalents (CDs, MMA)": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Restricted Cash": {
+      "rule_text": "100% Deferred to Long-Term Assets",
+      "rule_type": "percentage_deferred",
+      "multiplier": 0.0
+    },
+    "Marketable Securities": {
+      "rule_text": "20% Deferred to Long-Term Assets",
+      "rule_type": "percentage_deferred",
+      "multiplier": 0.8
+    },
+    "Accounts Receivable": {
+      "rule_text": "All A/R over 90 days Deferred to Long-Term Assets",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Costs & Earnings in Excess of Billings": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Retainage Receivable": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Prepaid Expenses": {
+      "rule_text": "100% Deferred to Long-Term Assets",
+      "rule_type": "percentage_deferred",
+      "multiplier": 0.0
+    },
+    "Cash Surrender Value Life  Ins. (CSVLI)": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "A/R Related Parties": {
+      "rule_text": "100% Disallowed from Assets and Equity",
+      "rule_type": "fully_disallowed",
+      "multiplier": 0.0
+    },
+    "Inventories": {
+      "rule_text": "50% Deferred to Long-Term Assets",
+      "rule_type": "percentage_deferred",
+      "multiplier": 0.5
+    },
+    "Advances To / Equity In JV's": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Other Current Assets": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    }
+  },
+  "noncurrent_assets": {
+    "Available for Sale Assets": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Marketable Securities": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Prepaid Expenses": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Accounts Receivable (Slow or Other)": {
+      "rule_text": "All A/R over 90 days deferred from Short-term to Long-Term Assets",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Property, Plant & Equipment Net": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Notes Receivable - Related Parties": {
+      "rule_text": "100% Disallowed from Assets and Equity",
+      "rule_type": "fully_disallowed",
+      "multiplier": 0.0
+    },
+    "Notes Receivable - Other": {
+      "rule_text": "Not 100% Disallowed from Assets and Equity",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Goodwill": {
+      "rule_text": "100% Disallowed from Assets and Equity",
+      "rule_type": "fully_disallowed",
+      "multiplier": 0.0
+    },
+    "Intangible Assets": {
+      "rule_text": "100% Disallowed from Assets and Equity",
+      "rule_type": "fully_disallowed",
+      "multiplier": 0.0
+    },
+    "Deferred Tax Assets": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Other Non-Current Assets": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "A/R Related Parties": {
+      "rule_text": "100% Disallowed from Assets and Equity",
+      "rule_type": "fully_disallowed",
+      "multiplier": 0.0
+    },
+    "Inventories": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Investment/Other Financial Asset": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Cash Surrender Value Life  Ins. (CSVLI)": {
+      "rule_text": "100% moved to Current Asset",
+      "rule_type": "fully_moved",
+      "multiplier": 0.0
+    },
+    "Restricted Cash": {
+      "rule_text": "100% Short-term Restricted cash deferred to Long-Term Assets",
+      "rule_type": "percentage_deferred",
+      "multiplier": 0.0
+    }
+  },
+  "current_liabilities": {
+    "Accounts Payable": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Retainage Payable": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Bank Line of Credit": {
+      "rule_text": "100% Current Regardless of Terms (Current + Non current)",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Current Portion of Long Term Debt": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Billings in Excess of Cost & Earnings": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Accrued Expenses": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Lease Obligations": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Income Tax Liability": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Related Party Payables": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Advances from Customers": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Other Current Liabilities": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    }
+  },
+  "noncurrent_liabilities": {
+    "Long-Term Debt": {
+      "rule_text": "If this includes line of credit, then line of credit amount should be moved to current liabilities (Bank Line of Credit)",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Deferred Compensation": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Deferred Tax": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Other Long-Term Liabilities": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Due to Consolidated JV /  Minority Interest": {
+      "rule_text": "Minority Interest / Non-Controlling Interest - 100% reclassified from Equity to Long Term Liability",
+      "rule_type": "reclassified",
+      "multiplier": 0.0
+    }
+  },
+  "equity": {
+    "Capital Stock": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Preferred Stock": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Treasury Stock": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Additional Paid In Capital": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Retained Earnings (Deficit)": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "LLC Members Equity": {
+      "rule_text": "Minority Interest / Non-Controlling Interest - 100% reclassified from Equity to Long Term Liability",
+      "rule_type": "reclassified",
+      "multiplier": 0.0
+    },
+    "Other Comprehensive Income (Loss)": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Foreign Currency Adjustment": {
+      "rule_text": "No Changes",
+      "rule_type": "no_changes",
+      "multiplier": 1.0
+    },
+    "Underwriting Adjustments": {
+      "rule_text": "Disallow Related Party A/R and N/R, Goodwill, intangible assets.",
+      "rule_type": "special",
+      "multiplier": 1.0
+    }
+  }
+}

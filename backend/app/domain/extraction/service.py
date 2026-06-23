@@ -6,6 +6,7 @@ from app.core.interfaces import StorageInterface
 from app.domain.extraction.detector import detect_pages
 from app.domain.extraction.parser import extract_table
 from app.domain.mapping.service import MappingService
+from app.domain.business_rules.service import SpreadingRulesService
 from app.domain.workbook_generation.sample_output import generate_sample_workbook
 from app.domain.workbook_generation.template_population import TemplatePopulationService
 from app.exceptions import AppException
@@ -55,6 +56,11 @@ class ExtractionService:
         if "balance_sheet" in extraction_results:
             mapping_service = MappingService()
             extraction_results["balance_sheet"] = mapping_service.apply(
+                extraction_results["balance_sheet"]
+            )
+
+            spreading_service = SpreadingRulesService()
+            extraction_results["balance_sheet"] = spreading_service.enrich_extraction(
                 extraction_results["balance_sheet"]
             )
 

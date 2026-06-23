@@ -30,7 +30,8 @@ def generate_sample_workbook(extraction_results: dict, output_path: str) -> str:
     for statement_type, data in extraction_results.items():
         sheet_name = _get_sheet_name(statement_type)
         has_mapping = any("mapped_category" in r for r in data.get("rows", []))
-        _create_sheet(wb, sheet_name, data, has_mapping)
+        has_spreading = any("spreading_rule" in r for r in data.get("rows", []))
+        _create_sheet(wb, sheet_name, data, has_mapping, has_spreading)
 
     wb.save(output_path)
     logger.info("sample_workbook_generated", path=output_path)
@@ -45,7 +46,7 @@ def _get_sheet_name(statement_type: str) -> str:
     return names.get(statement_type, statement_type)
 
 
-def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_mapping: bool):
+def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_mapping: bool, has_spreading: bool = False):
     ws = wb.create_sheet(title=sheet_name)
     periods = data.get("periods", [])
     rows = data.get("rows", [])
@@ -54,6 +55,8 @@ def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_mapping: bool):
     if has_mapping:
         headers.append("Normalized Label")
     headers += ["Section", "Row Type", "Is Non-Mappable", "Mapped Category"]
+    if has_spreading:
+        headers.append("Spreading Rule")
     headers += periods
 
     for col_idx, header in enumerate(headers, 1):
@@ -89,6 +92,10 @@ def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_mapping: bool):
         mapped_category = row_data.get("mapped_category", "")
         mapped_cell = ws.cell(row=row_idx, column=col, value=mapped_category)
         col += 1
+
+        if has_spreading:
+            ws.cell(row=row_idx, column=col, value=row_data.get("spreading_rule", ""))
+            col += 1
 
         for period_idx, period in enumerate(periods):
             value = row_data["values"].get(period)
@@ -131,6 +138,9 @@ def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_mapping: bool):
     col_idx += 1
     ws.column_dimensions[get_column_letter(col_idx)].width = 30
     col_idx += 1
+    if has_spreading:
+        ws.column_dimensions[get_column_letter(col_idx)].width = 45
+        col_idx += 1
     for i in range(len(periods)):
         ws.column_dimensions[get_column_letter(col_idx + i)].width = 24
 
