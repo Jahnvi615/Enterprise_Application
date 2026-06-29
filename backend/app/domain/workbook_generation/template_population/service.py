@@ -8,6 +8,7 @@ from openpyxl.workbook.properties import CalcProperties
 from openpyxl.utils import get_column_letter, column_index_from_string
 from app.domain.workbook_generation.template_population.balance_sheet_handler import BalanceSheetHandler
 from app.domain.workbook_generation.template_population.balance_sheet_trend_handler import BalanceSheetTrendHandler
+from app.domain.workbook_generation.template_population.ratio_handler import RatioHandler
 import structlog
 
 logger = structlog.get_logger()
@@ -47,6 +48,11 @@ class TemplatePopulationService:
             trend_handler = BalanceSheetTrendHandler(self)
             trend_handler.handle(wb, context)
             self.fix_cross_sheet_references(wb, BALANCE_SHEET_TREND_NAME, 2, 1)
+
+        if "Ratio" in wb.sheetnames:
+            ratio_handler = RatioHandler(self)
+            ratio_handler.handle(wb, context)
+            self.fix_cross_sheet_references(wb, "Ratio", 4, 1)
 
         wb.calculation = CalcProperties(fullCalcOnLoad=True)
         wb.save(output_path)
