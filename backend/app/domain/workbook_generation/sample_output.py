@@ -29,9 +29,9 @@ def generate_sample_workbook(extraction_results: dict, output_path: str) -> str:
 
     for statement_type, data in extraction_results.items():
         sheet_name = _get_sheet_name(statement_type)
-        has_mapping = any("mapped_category" in r for r in data.get("rows", []))
+        has_normalized_label = any(r.get("normalized_label") for r in data.get("rows", []))
         has_spreading = any("spreading_rule" in r for r in data.get("rows", []))
-        _create_sheet(wb, sheet_name, data, has_mapping, has_spreading)
+        _create_sheet(wb, sheet_name, data, has_normalized_label, has_spreading)
 
     wb.save(output_path)
     logger.info("sample_workbook_generated", path=output_path)
@@ -46,13 +46,13 @@ def _get_sheet_name(statement_type: str) -> str:
     return names.get(statement_type, statement_type)
 
 
-def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_mapping: bool, has_spreading: bool = False):
+def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_normalized_label: bool = False, has_spreading: bool = False):
     ws = wb.create_sheet(title=sheet_name)
     periods = data.get("periods", [])
     rows = data.get("rows", [])
 
     headers = ["Source Label"]
-    if has_mapping:
+    if has_normalized_label:
         headers.append("Normalized Label")
     headers += ["Section", "Row Type", "Is Non-Mappable", "Mapped Category"]
     if has_spreading:
@@ -78,7 +78,7 @@ def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_mapping: bool, 
         ws.cell(row=row_idx, column=col, value=row_data["source_label"])
         col += 1
 
-        if has_mapping:
+        if has_normalized_label:
             ws.cell(row=row_idx, column=col, value=row_data.get("normalized_label", ""))
             col += 1
 
@@ -127,7 +127,7 @@ def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_mapping: bool, 
     col_idx = 1
     ws.column_dimensions[get_column_letter(col_idx)].width = 65
     col_idx += 1
-    if has_mapping:
+    if has_normalized_label:
         ws.column_dimensions[get_column_letter(col_idx)].width = 45
         col_idx += 1
     ws.column_dimensions[get_column_letter(col_idx)].width = 25

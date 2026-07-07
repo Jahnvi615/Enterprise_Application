@@ -5,7 +5,7 @@ import pdfplumber
 from app.core.interfaces import StorageInterface
 from app.domain.extraction.detector import detect_pages
 from app.domain.extraction.parser import extract_table
-from app.domain.mapping.service import MappingService
+from app.domain.mapping.service import MappingService, CashFlowMappingService
 from app.domain.business_rules.service import SpreadingRulesService
 from app.domain.workbook_generation.sample_output import generate_sample_workbook
 from app.domain.workbook_generation.template_population import TemplatePopulationService
@@ -64,6 +64,12 @@ class ExtractionService:
                 extraction_results["balance_sheet"]
             )
 
+        if "cash_flow" in extraction_results:
+            cf_mapping_service = CashFlowMappingService()
+            extraction_results["cash_flow"] = cf_mapping_service.apply(
+                extraction_results["cash_flow"]
+            )
+
         output_filename = f"{safe_name}_extracted_{job_id}.xlsx"
         output_rel_path = f"outputs/{output_filename}"
         output_abs_path = self._get_abs_path(output_rel_path)
@@ -81,6 +87,7 @@ class ExtractionService:
                 template_path=template_path,
                 extraction_data=extraction_results["balance_sheet"],
                 output_path=template_output_path,
+                cash_flow_data=extraction_results.get("cash_flow"),
             )
 
         logger.info("extraction_completed", job_id=job_id, output=output_filename)

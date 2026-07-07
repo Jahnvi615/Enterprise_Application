@@ -9,6 +9,7 @@ from openpyxl.utils import get_column_letter, column_index_from_string
 from app.domain.workbook_generation.template_population.balance_sheet_handler import BalanceSheetHandler
 from app.domain.workbook_generation.template_population.balance_sheet_trend_handler import BalanceSheetTrendHandler
 from app.domain.workbook_generation.template_population.ratio_handler import RatioHandler
+from app.domain.workbook_generation.template_population.cash_flow_handler import CashFlowHandler
 import structlog
 
 logger = structlog.get_logger()
@@ -23,6 +24,7 @@ class TemplatePopulationService:
         template_path: str,
         extraction_data: dict,
         output_path: str,
+        cash_flow_data: dict | None = None,
     ) -> str:
         wb = load_workbook(template_path, keep_vba=True)
 
@@ -53,6 +55,11 @@ class TemplatePopulationService:
             ratio_handler = RatioHandler(self)
             ratio_handler.handle(wb, context)
             self.fix_cross_sheet_references(wb, "Ratio", 4, 1)
+
+        if "Cash Flow" in wb.sheetnames and cash_flow_data:
+            cf_handler = CashFlowHandler(self)
+            cf_handler.handle(wb, cash_flow_data, context)
+            self.fix_cross_sheet_references(wb, "Cash Flow", 2, 1)
 
         wb.calculation = CalcProperties(fullCalcOnLoad=True)
         wb.save(output_path)

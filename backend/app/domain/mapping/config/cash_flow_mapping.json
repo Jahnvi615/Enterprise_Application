@@ -1,0 +1,218 @@
+{
+  "Operating Activities": {
+    "Net Income": [
+      "net earnings",
+      "net income",
+      "net earnings (loss)",
+      "net income (loss)",
+      "net loss"
+    ],
+    "(Earnings) loss from equity method investments, net of distributions": [
+      "equity method earnings, net of taxes",
+      "earnings from equity method investments, net of distributions",
+      "(earnings) loss from equity method investments, net of distributions",
+      "earnings from equity method investments",
+      "equity in earnings of unconsolidated affiliates",
+      "equity method earnings"
+    ],
+    "Depreciation of fixed assets": [
+      "depreciation and amortization",
+      "depreciation",
+      "depreciation of fixed assets",
+      "depreciation of property and equipment",
+      "depreciation and amortization expense"
+    ],
+    "(Gain)/Loss on sale of assets": [
+      "(gain) loss on sales of assets",
+      "gain on sales of assets",
+      "(gain)/loss on sale of assets",
+      "gain (loss) on sale of assets",
+      "loss (gain) on sale of assets",
+      "(gain) loss on sale of assets",
+      "gain/loss on sale of assets"
+    ],
+    "Stock based compensation": [
+      "stock-based compensation",
+      "stock based compensation",
+      "share-based compensation",
+      "share-based payment expense",
+      "stock-based compensation expense"
+    ],
+    "Deferred taxes": [
+      "deferred taxes",
+      "deferred income taxes",
+      "deferred tax benefit",
+      "deferred tax expense",
+      "deferred tax benefit (expense)",
+      "deferred tax expense (benefit)"
+    ],
+    "Changes in operating assets and liabilities": [
+      "changes in assets and liabilities",
+      "changes in operating assets and liabilities",
+      "net change in operating assets and liabilities",
+      "changes in working capital"
+    ],
+    "Other items": [
+      "other",
+      "other items",
+      "other operating activities",
+      "other adjustments"
+    ]
+  },
+  "Operating Cash Flow": {
+    "Net Cash Provided (used in) Operating Activities": [
+      "operating cash flow",
+      "net cash provided by operating activities",
+      "net cash used in operating activities",
+      "net cash provided (used in) operating activities",
+      "net cash flows from operating activities"
+    ]
+  },
+  "Investing Activities": {
+    "Purchases of marketable securities": [
+      "purchases of marketable securities",
+      "purchase of marketable securities",
+      "purchases of investments",
+      "purchases of short-term investments"
+    ],
+    "Proceeds from the sales and maturities of marketable securities": [
+      "proceeds from sales and maturities of marketable securities",
+      "proceeds from sale and maturity of marketable securities",
+      "proceeds from sales and maturities of investments",
+      "proceeds from maturities and sales of marketable securities"
+    ],
+    "Capital expenditures": [
+      "capital expenditures",
+      "capital expenditure",
+      "purchases of property, plant and equipment",
+      "purchase of property, plant and equipment",
+      "acquisition of property, plant and equipment",
+      "capex"
+    ],
+    "Proceeds from sale of other assets": [
+      "proceeds from sales of assets",
+      "proceeds from sale of assets",
+      "proceeds from disposal of assets",
+      "proceeds from sale of other assets"
+    ],
+    "Investments in partnerships and joint ventures": [
+      "investments in partnerships and joint ventures",
+      "investment in partnerships and joint ventures",
+      "investments in joint ventures",
+      "contributions to joint ventures"
+    ],
+    "Proceeds from the sale of NuScale shares": [
+      "proceeds from the sale of nuscale shares",
+      "proceeds from sale of nuscale shares"
+    ],
+    "Other items": [
+      "other",
+      "other items",
+      "other investing activities"
+    ]
+  },
+  "Investing Cash Flow": {
+    "Net Cash flows Provided By (used in) Investing activities": [
+      "investing cash flow",
+      "net cash used in investing activities",
+      "net cash provided by investing activities",
+      "net cash provided (used in) investing activities",
+      "net cash flows from investing activities"
+    ]
+  },
+  "Financing Activities": {
+    "Purchases and retirement of debt": [
+      "purchase and retirement of debt",
+      "purchases and retirement of debt",
+      "repurchase and retirement of debt",
+      "purchase and retirement of long-term debt",
+      "repurchases and retirement of debt"
+    ],
+    "Distributions paid to noncontrolling interests": [
+      "distributions paid to nci",
+      "distributions to noncontrolling interests",
+      "distributions paid to noncontrolling interests",
+      "dividends paid to noncontrolling interests"
+    ],
+    "Capital contributions by noncontrolling interests": [
+      "capital contributions by nci",
+      "contributions from noncontrolling interests",
+      "capital contributions by noncontrolling interests",
+      "contributions by noncontrolling interests"
+    ],
+    "Proceeds from sale of NuScale interest": [
+      "proceeds from nuscale share issuance (net of issuance fees)",
+      "proceeds from sale of nuscale interest",
+      "proceeds from nuscale de-spac transaction",
+      "proceeds from nuscale share issuance"
+    ],
+    "Repurchase of common stock": [
+      "repurchase of common stock",
+      "repurchases of common stock",
+      "buyback of common stock",
+      "share repurchases",
+      "common stock repurchases"
+    ],
+    "Taxes paid on vested restricted stock": [
+      "taxes paid on vested restricted stock",
+      "tax withholding payments for stock-based awards",
+      "taxes paid related to net share settlement of equity awards"
+    ],
+    "Dividends paid": [
+      "dividends paid on cps",
+      "dividends paid",
+      "dividends paid to stockholders",
+      "dividends paid to shareholders"
+    ],
+    "Proceeds from issuance of 2029 Notes, net of issuance costs": [
+      "proceeds from issuance of 2029 notes, net of issuance costs",
+      "proceeds from 2029 notes"
+    ],
+    "Capped call transactions related to 2029 Notes": [
+      "capped call transacton related to 2029 notes",
+      "capped call transactions related to 2029 notes",
+      "capped call transaction related to 2029 notes"
+    ],
+    "Make-whole payment on conversion of CPS": [
+      "make-whole payment on conversion of cps",
+      "make whole payment on conversion of cps"
+    ],
+    "Other items": [
+      "other",
+      "other items",
+      "other financing activities"
+    ]
+  },
+  "Financing Cash Flow": {
+    "Net Cash flows Provided By (used in) Financing activities": [
+      "financing cash flow",
+      "net cash used in financing activities",
+      "net cash provided by financing activities",
+      "net cash provided (used in) financing activities",
+      "net cash flows from financing activities"
+    ]
+  },
+  "Other": {
+    "Net increase (decrease) in cash and cash equivalents": [
+      "increase (decrease) in cash and cash equivalents",
+      "net increase (decrease) in cash and cash equivalents",
+      "net change in cash and cash equivalents",
+      "increase (decrease) in cash"
+    ],
+    "Cash and cash equivalents at beginning of period": [
+      "cash and cash equivalents at beginning of period",
+      "cash and cash equivalents, beginning of period",
+      "cash at beginning of period"
+    ],
+    "Effect of exchange rate changes on cash": [
+      "effect of exchange rate changes on cash",
+      "effect of exchange rates on cash",
+      "effect of foreign exchange rate changes on cash"
+    ],
+    "Cash and cash equivalents at end of period": [
+      "cash and cash equivalents at end of period",
+      "cash and cash equivalents, end of period",
+      "cash at end of period"
+    ]
+  }
+}
