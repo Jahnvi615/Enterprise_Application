@@ -1,0 +1,32 @@
+{
+  "Contract Revenues Earned": [
+    "revenue"
+  ],
+  "Cost of Contract Revenues Earned": [
+    "cost of revenue"
+  ],
+  "Selling general administrative expenses": [
+    "g&a"
+  ],
+  "Equity in earnings from unconsolidated joint venture": [
+    "equity method earnings (loss)"
+  ],
+  "Interest income": [
+    "interest income"
+  ],
+  "Interest expense": [
+    "interest expense"
+  ],
+  "Other expense": [
+    "foreign currency gain (loss)"
+  ],
+  "Income tax expense": [
+    "income tax expense",
+    "income tax benefit (expense)",
+    "income tax benefit"
+  ],
+  "Distribution/Dividends": [
+    "less: dividends on cps",
+    "less: make-whole payment on conversion of cps"
+  ]
+}

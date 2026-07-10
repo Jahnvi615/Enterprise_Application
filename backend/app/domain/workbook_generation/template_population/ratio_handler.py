@@ -144,7 +144,14 @@ class RatioHandler:
         trend_pattern = re.compile(
             r"('{0}'!)({1})(\d+)".format(re.escape(BALANCE_SHEET_TREND_NAME), trend_src_letter)
         )
-        return trend_pattern.sub(
+        result = trend_pattern.sub(
             lambda m: f"{m.group(1)}{trend_new_letter}{m.group(3)}",
             formula,
+        )
+        pnl_pattern = re.compile(
+            r"('P&L'!)({0})(\d+)".format(trend_src_letter)
+        )
+        return pnl_pattern.sub(
+            lambda m: f"{m.group(1)}{trend_new_letter}{m.group(3)}",
+            result,
         )

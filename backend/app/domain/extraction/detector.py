@@ -17,9 +17,17 @@ CASH_FLOW_PATTERNS = [
     r"statements?\s+of\s+cash\s+flows",
 ]
 
+P_AND_L_PATTERNS = [
+    r"condensed\s+consolidated\s+statement\s+of\s+operations",
+    r"consolidated\s+statement\s+of\s+operations",
+    r"statements?\s+of\s+operations",
+    r"statement\s+of\s+income",
+    r"income\s+statement",
+]
+
 
 def detect_pages(pages: list) -> dict[str, int | None]:
-    results = {"balance_sheet": None, "cash_flow": None}
+    results = {"balance_sheet": None, "cash_flow": None, "p_and_l": None}
 
     for i, page in enumerate(pages):
         text = (page.extract_text() or "").lower()
@@ -40,7 +48,15 @@ def detect_pages(pages: list) -> dict[str, int | None]:
                         logger.info("detected_cash_flow", page=i + 1)
                         break
 
-        if results["balance_sheet"] is not None and results["cash_flow"] is not None:
+        if results["p_and_l"] is None:
+            for pattern in P_AND_L_PATTERNS:
+                if re.search(pattern, text):
+                    if _has_financial_data(page):
+                        results["p_and_l"] = i
+                        logger.info("detected_p_and_l", page=i + 1)
+                        break
+
+        if all(v is not None for v in results.values()):
             break
 
     return results

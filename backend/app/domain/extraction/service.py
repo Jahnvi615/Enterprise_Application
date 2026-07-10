@@ -5,7 +5,9 @@ import pdfplumber
 from app.core.interfaces import StorageInterface
 from app.domain.extraction.detector import detect_pages
 from app.domain.extraction.parser import extract_table
+from app.domain.extraction.p_and_l_parser import extract_p_and_l
 from app.domain.mapping.service import MappingService, CashFlowMappingService
+from app.domain.mapping.p_and_l_mapping_service import PAndLMappingService
 from app.domain.business_rules.service import SpreadingRulesService
 from app.domain.workbook_generation.sample_output import generate_sample_workbook
 from app.domain.workbook_generation.template_population import TemplatePopulationService
@@ -53,6 +55,12 @@ class ExtractionService:
                     "cash_flow",
                 )
 
+            if pages["p_and_l"] is not None:
+                extraction_results["p_and_l"] = extract_p_and_l(
+                    pdf.pages[pages["p_and_l"]],
+                    pages["p_and_l"],
+                )
+
         if "balance_sheet" in extraction_results:
             mapping_service = MappingService()
             extraction_results["balance_sheet"] = mapping_service.apply(
@@ -68,6 +76,12 @@ class ExtractionService:
             cf_mapping_service = CashFlowMappingService()
             extraction_results["cash_flow"] = cf_mapping_service.apply(
                 extraction_results["cash_flow"]
+            )
+
+        if "p_and_l" in extraction_results:
+            p_and_l_mapping_service = PAndLMappingService()
+            extraction_results["p_and_l"] = p_and_l_mapping_service.apply(
+                extraction_results["p_and_l"]
             )
 
         output_filename = f"{safe_name}_extracted_{job_id}.xlsx"
@@ -88,6 +102,7 @@ class ExtractionService:
                 extraction_data=extraction_results["balance_sheet"],
                 output_path=template_output_path,
                 cash_flow_data=extraction_results.get("cash_flow"),
+                p_and_l_data=extraction_results.get("p_and_l"),
             )
 
         logger.info("extraction_completed", job_id=job_id, output=output_filename)

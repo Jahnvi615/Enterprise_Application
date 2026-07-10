@@ -21,6 +21,7 @@ BORDER_TOTAL = Border(
 )
 
 NUMBER_FORMAT = '#,##0;(#,##0)'
+NUMBER_FORMAT_DECIMAL = '#,##0.####;(#,##0.####)'
 
 
 def generate_sample_workbook(extraction_results: dict, output_path: str) -> str:
@@ -42,6 +43,7 @@ def _get_sheet_name(statement_type: str) -> str:
     names = {
         "balance_sheet": "BalanceSheet",
         "cash_flow": "CashFlow",
+        "p_and_l": "P&L",
     }
     return names.get(statement_type, statement_type)
 
@@ -101,7 +103,8 @@ def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_normalized_labe
             value = row_data["values"].get(period)
             val_cell = ws.cell(row=row_idx, column=period_start_col + period_idx, value=value)
             if value is not None:
-                val_cell.number_format = NUMBER_FORMAT
+                has_decimal = isinstance(value, float) and value != int(value)
+                val_cell.number_format = NUMBER_FORMAT_DECIMAL if has_decimal else NUMBER_FORMAT
                 val_cell.alignment = Alignment(horizontal="right")
 
         for c in range(1, len(headers) + 1):
@@ -121,7 +124,7 @@ def _create_sheet(wb: Workbook, sheet_name: str, data: dict, has_normalized_labe
         if not is_section and not is_total:
             ws.cell(row=row_idx, column=1).alignment = Alignment(indent=2)
 
-        if mapped_category == "UNMAPPED" and not is_section and not is_total:
+        if mapped_category.startswith("UNMAPPED") and not is_section and not is_total:
             mapped_cell.font = UNMAPPED_FONT
 
     col_idx = 1

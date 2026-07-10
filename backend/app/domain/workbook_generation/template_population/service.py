@@ -10,6 +10,7 @@ from app.domain.workbook_generation.template_population.balance_sheet_handler im
 from app.domain.workbook_generation.template_population.balance_sheet_trend_handler import BalanceSheetTrendHandler
 from app.domain.workbook_generation.template_population.ratio_handler import RatioHandler
 from app.domain.workbook_generation.template_population.cash_flow_handler import CashFlowHandler
+from app.domain.workbook_generation.template_population.p_and_l_handler import PAndLHandler, PNL_SHEET_NAME
 import structlog
 
 logger = structlog.get_logger()
@@ -25,6 +26,7 @@ class TemplatePopulationService:
         extraction_data: dict,
         output_path: str,
         cash_flow_data: dict | None = None,
+        p_and_l_data: dict | None = None,
     ) -> str:
         wb = load_workbook(template_path, keep_vba=True)
 
@@ -50,6 +52,11 @@ class TemplatePopulationService:
             trend_handler = BalanceSheetTrendHandler(self)
             trend_handler.handle(wb, context)
             self.fix_cross_sheet_references(wb, BALANCE_SHEET_TREND_NAME, 2, 1)
+
+        if PNL_SHEET_NAME in wb.sheetnames and p_and_l_data:
+            pnl_handler = PAndLHandler(self)
+            pnl_handler.handle(wb, p_and_l_data, context)
+            self.fix_cross_sheet_references(wb, PNL_SHEET_NAME, 2, 1)
 
         if "Ratio" in wb.sheetnames:
             ratio_handler = RatioHandler(self)
