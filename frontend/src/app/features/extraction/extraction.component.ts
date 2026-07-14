@@ -31,6 +31,7 @@ export class ExtractionComponent {
   loading = false;
   error = '';
   result: ExtractionResponse | null = null;
+  timeTaken = '';
 
   constructor(private http: HttpClient) {}
 
@@ -50,6 +51,8 @@ export class ExtractionComponent {
     this.loading = true;
     this.error = '';
     this.result = null;
+    this.timeTaken = '';
+    const startTime = performance.now();
 
     const formData = new FormData();
     formData.append('pdf', this.pdfFile);
@@ -62,6 +65,7 @@ export class ExtractionComponent {
       .subscribe({
         next: (res) => {
           this.result = res;
+          this.timeTaken = this.formatDuration((performance.now() - startTime) / 1000);
           this.loading = false;
         },
         error: (err) => {
@@ -69,6 +73,18 @@ export class ExtractionComponent {
           this.loading = false;
         },
       });
+  }
+
+  private formatDuration(seconds: number): string {
+    if (seconds < 60) {
+      return `${seconds.toFixed(1)} sec`;
+    }
+    const minutes = Math.floor(seconds / 60);
+    const remaining = Math.floor(seconds % 60);
+    if (remaining === 0) {
+      return `${minutes} min`;
+    }
+    return `${minutes} min ${remaining} sec`;
   }
 
   download(): void {

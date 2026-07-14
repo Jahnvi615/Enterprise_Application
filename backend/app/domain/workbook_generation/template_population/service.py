@@ -27,6 +27,7 @@ class TemplatePopulationService:
         output_path: str,
         cash_flow_data: dict | None = None,
         p_and_l_data: dict | None = None,
+        notes_data: dict | None = None,
     ) -> str:
         wb = load_workbook(template_path, keep_vba=True)
 
@@ -45,7 +46,7 @@ class TemplatePopulationService:
 
         if BALANCE_SHEET_NAME in wb.sheetnames:
             bs_handler = BalanceSheetHandler(self)
-            bs_handler.handle(wb, extraction_data, context)
+            bs_handler.handle(wb, extraction_data, context, notes_data=notes_data or {})
             self.fix_cross_sheet_references(wb, BALANCE_SHEET_NAME, context["insert_col"], context["bs_insert_count"])
 
         if BALANCE_SHEET_TREND_NAME in wb.sheetnames:

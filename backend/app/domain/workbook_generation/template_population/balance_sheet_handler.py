@@ -1,6 +1,7 @@
 from datetime import datetime
 from openpyxl.utils import get_column_letter
 from app.domain.business_rules.service import SpreadingRulesService
+from app.domain.business_rules.bs_custom_rules import BalanceSheetCustomRulesService
 import structlog
 
 logger = structlog.get_logger()
@@ -29,7 +30,7 @@ class BalanceSheetHandler:
     def __init__(self, orchestrator):
         self._orch = orchestrator
 
-    def handle(self, wb, extraction_data: dict, context: dict):
+    def handle(self, wb, extraction_data: dict, context: dict, notes_data: dict | None = None):
         ws = wb[BALANCE_SHEET_NAME]
 
         period = context["period"]
@@ -58,6 +59,22 @@ class BalanceSheetHandler:
             as_given_col=INSERT_COL,
             as_allowed_col=INSERT_COL + 1,
             remarks_col=INSERT_COL + 2,
+        )
+
+        effective_notes_data = notes_data or {}
+        accrued_salaries, other_accrued = self._extract_accrued_components(extraction_data, period)
+        if accrued_salaries is not None:
+            effective_notes_data["accrued_salaries_wages"] = accrued_salaries
+        if other_accrued is not None:
+            effective_notes_data["other_accrued_liabilities"] = other_accrued
+
+        custom_rules_service = BalanceSheetCustomRulesService()
+        custom_rules_service.apply(
+            ws,
+            as_given_col=INSERT_COL,
+            as_allowed_col=INSERT_COL + 1,
+            remarks_col=INSERT_COL + 2,
+            notes_data=effective_notes_data,
         )
 
         self._propagate_total_formulas(ws)
@@ -176,6 +193,30 @@ class BalanceSheetHandler:
                 )
 
         return populated
+
+    def _extract_accrued_components(self, extraction_data: dict, period: str) -> tuple:
+        accrued_salaries = None
+        other_accrued = None
+        for row in extraction_data.get("rows", []):
+            if row.get("section", "") != "Current Liabilities":
+                continue
+            if row.get("row_type") != "line_item":
+                continue
+            source = row.get("source_label", "").lower()
+            value = row.get("values", {}).get(period)
+            if value is None:
+                continue
+            if "accrued salaries" in source:
+                accrued_salaries = round(value * 1000)
+            elif "other accrued" in source:
+                other_accrued = round(value * 1000)
+        logger.debug(
+            "bs_accrued_components_extracted",
+            period=period,
+            accrued_salaries=accrued_salaries,
+            other_accrued=other_accrued,
+        )
+        return accrued_salaries, other_accrued
 
     def _propagate_total_formulas(self, ws):
         src_as_given = INSERT_COL + INSERT_COUNT

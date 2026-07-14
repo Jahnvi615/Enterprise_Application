@@ -1,0 +1,158 @@
+{
+  "description": "Catalog of Balance Sheet fields with custom As Allowed / Remarks logic. Each entry covers one field. Add new entries following the same structure as existing ones.",
+  "customized_fields": [
+    {
+      "section": "Current Assets",
+      "field": "Accounts Receivable",
+      "row": 15,
+      "summary": "JV-related A/R deducted from As Allowed",
+      "custom_logic": [
+        "Amount extracted from PDF 'Partnerships and Joint Ventures' notes section",
+        "As Allowed = As Given minus extracted JV amount",
+        "Remark shows the As Given total and the JV portion separately"
+      ]
+    },
+    {
+      "section": "Current Assets",
+      "field": "A/R Related Parties",
+      "row": 20,
+      "summary": "JV A/R amount shown as 100% disallowed",
+      "custom_logic": [
+        "As Given is populated by standard extraction if PDF contains this field — no special handling needed",
+        "As Allowed = extracted JV amount multiplied by 0",
+        "Remark written unconditionally regardless of As Given being empty"
+      ]
+    },
+    {
+      "section": "Current Assets",
+      "field": "Costs & Earnings in Excess of Billings",
+      "row": 16,
+      "summary": "Remark added showing unbilled receivables amount from contract assets note",
+      "custom_logic": [
+        "As Given and As Allowed formula are both correct — no change needed",
+        "Remark sourced from PDF 'Contract Assets and Liabilities' note section",
+        "Amount is 'Unbilled receivables - reimbursable contracts' for the insertion period",
+        "Table header date is split across two lines — first col date reconstructed before matching",
+        "Period matched explicitly: first col if matches, second col if matches, else None"
+      ]
+    },
+    {
+      "section": "Noncurrent Assets",
+      "field": "Marketable Securities",
+      "row": 30,
+      "summary": "As Allowed set to 20% of current Marketable Securities via cross-row formula",
+      "custom_logic": [
+        "As Given is populated by standard extraction if PDF contains this field — no special handling needed",
+        "As Allowed = current Marketable Securities (row 14) As Given column * 0.2",
+        "Formula written unconditionally — does not depend on As Given being populated or empty",
+        "Remarks left blank — no remark for this field"
+      ]
+    },
+    {
+      "section": "Noncurrent Assets",
+      "field": "Investment/Other Financial Asset",
+      "row": 42,
+      "summary": "Static remark added — As Given and As Allowed already handled correctly",
+      "custom_logic": [
+        "As Given and As Allowed are correct from standard rules — no change needed",
+        "Remark is static text: 'Includes Investments'",
+        "No PDF extraction required — remark does not contain dynamic values"
+      ]
+    },
+    {
+      "section": "Current Liabilities",
+      "field": "Billings in Excess of Cost & Earnings",
+      "row": 54,
+      "summary": "Static remark added — As Given and As Allowed already handled correctly",
+      "custom_logic": [
+        "As Given and As Allowed are correct from standard rules — no change needed",
+        "Remark is static text: 'Includes Contract liabilities'",
+        "No PDF extraction required — remark does not contain dynamic values"
+      ]
+    },
+    {
+      "section": "Current Liabilities",
+      "field": "Accrued Expenses",
+      "row": 55,
+      "summary": "As Given corrected to sum of both components; Remark shows breakdown",
+      "custom_logic": [
+        "PDF has two separate line items: 'Accrued salaries, wages and benefits' and 'Other accrued liabilities'",
+        "Without this, only 'Other accrued liabilities' reaches the template — the other goes UNMAPPED",
+        "Both values read from extraction_data rows by source_label pattern match in Current Liabilities section for the insertion period",
+        "As Given overwritten with sum of both components (in thousands)",
+        "As Allowed not touched — existing formula =B55*1 self-corrects once As Given is fixed",
+        "Remark: 'Includes Accrued salaries, wages and benefits $X + Other accrued liabilities $Y' (amounts comma-formatted)",
+        "Skips silently if either component value is absent for the insertion period"
+      ]
+    },
+    {
+      "section": "Noncurrent Liabilities",
+      "field": "Long-Term Debt",
+      "row": 65,
+      "summary": "Remark cleared — SpreadingRulesService writes rule_text but template has no remark for this field",
+      "custom_logic": [
+        "As Given and As Allowed are correct from standard rules — no change needed",
+        "SpreadingRulesService writes rule_text 'If this includes line of credit...' because it is not equal to 'No Changes'",
+        "Template shows Remarks as empty/None for all existing periods",
+        "Remark cell set to None unconditionally to clear whatever SpreadingRulesService wrote"
+      ]
+    },
+    {
+      "section": "Noncurrent Liabilities",
+      "field": "Other Long-Term Liabilities",
+      "row": 68,
+      "summary": "As Allowed reduced by Deferred Compensation when present; Remark shows breakdown",
+      "custom_logic": [
+        "Trigger: Deferred Compensation (row 66) As Allowed value present in the dynamically inserted column",
+        "DC As Given is always None — DC As Allowed is a static number set independently (never a formula from SpreadingRulesService)",
+        "If DC As Allowed is absent (None): no change — SpreadingRulesService result for OLL is correct",
+        "dc_value is read directly from DC As Allowed when it is a static number; falls back to DC As Given if DC As Allowed is a formula",
+        "As Allowed for OLL overwritten: =<as_given_letter>68*1-<as_allowed_letter>66 (cross-row formula referencing DC As Allowed cell — matches template pattern)",
+        "Remark: 'Includes Other non current liabilities $X - Deferred compensation $Y' (both amounts comma-formatted)",
+        "X = OLL As Given value; Y = dc_value (from DC As Allowed) for the insertion period"
+      ]
+    },
+    {
+      "section": "Noncurrent Liabilities",
+      "field": "Due to Consolidated JV / Minority Interest",
+      "row": 69,
+      "summary": "As Allowed set to LLC Members Equity As Given via cross-row formula",
+      "custom_logic": [
+        "As Given is always None — SpreadingRulesService skips this row entirely",
+        "Trigger: LLC Members Equity / NCI (row 82) As Given value present in the dynamically inserted column",
+        "If row 82 As Given is absent (None): skip silently — nothing written",
+        "As Allowed written as cross-row formula: =<as_given_letter>82 (references row 82 As Given of the same period column)",
+        "No remarks written for this field",
+        "Row 82 As Given is populated by standard extraction before custom rules run — no special handling needed"
+      ]
+    },
+    {
+      "section": "Equity",
+      "field": "LLC Members Equity",
+      "row": 82,
+      "summary": "Remark overridden to match template text — SpreadingRulesService writes different rule_text",
+      "custom_logic": [
+        "As Given and As Allowed (=B82*0) are correct from standard rules — no change needed",
+        "SpreadingRulesService writes rule_text 'Minority Interest / Non-Controlling Interest - 100% reclassified from Equity to Long Term Liability'",
+        "Template consistently shows 'Includes Non Controlling interest (100% Reclassified from equity to long term liability)' across all periods",
+        "Remark overwritten unconditionally with the correct template text"
+      ]
+    },
+    {
+      "section": "Equity",
+      "field": "Underwriting Adjustments",
+      "row": 85,
+      "summary": "As Allowed and Remark set based on which disallowed components are present for the period",
+      "custom_logic": [
+        "As Given is always None across all periods — SpreadingRulesService skips this row entirely",
+        "Requires jv_ar_amount from notes_data (same PDF extraction used for A/R row 15 and row 20) — skip silently if absent",
+        "Goodwill (row 36) and Intangible Assets (row 37) As Given are read from the inserted column after SpreadingRulesService runs",
+        "Condition 1 (JV only — Goodwill and Intangibles both absent): As Allowed = =-<jv_ar_amount>; Remark = 'Includes Work performed for unconsolidated partnerships and joint ventures (100% Disallowed from asset and equity)'",
+        "Condition 2 (Goodwill present, no Intangibles): As Allowed = =-<as_given_letter>36-<jv_ar_amount>; Remark includes Goodwill value and JV amount",
+        "Condition 3 (Goodwill + Intangibles both present): As Allowed = =-<as_given_letter>36-<as_given_letter>37-<jv_ar_amount>; Remark includes all three components",
+        "Goodwill and Intangibles are treated as absent when their As Given value is None or 0",
+        "Dollar amounts in remarks are comma-formatted integers matching the existing template pattern"
+      ]
+    }
+  ]
+}

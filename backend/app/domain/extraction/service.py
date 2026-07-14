@@ -1,4 +1,5 @@
 import os
+import time
 import uuid
 from pathlib import Path
 import pdfplumber
@@ -6,6 +7,7 @@ from app.core.interfaces import StorageInterface
 from app.domain.extraction.detector import detect_pages
 from app.domain.extraction.parser import extract_table
 from app.domain.extraction.p_and_l_parser import extract_p_and_l
+from app.domain.extraction.notes_parser import extract_balance_sheet_notes
 from app.domain.mapping.service import MappingService, CashFlowMappingService
 from app.domain.mapping.p_and_l_mapping_service import PAndLMappingService
 from app.domain.business_rules.service import SpreadingRulesService
@@ -33,6 +35,9 @@ class ExtractionService:
 
         logger.info("extraction_started", job_id=job_id, pdf=pdf_filename)
 
+        t_total_start = time.perf_counter()
+        notes_data = {}
+
         with pdfplumber.open(pdf_path) as pdf:
             pages = detect_pages(pdf.pages)
 
@@ -47,6 +52,11 @@ class ExtractionService:
                     pages["balance_sheet"],
                     "balance_sheet",
                 )
+                # Extract values from PDF notes sections needed for Balance Sheet
+                # custom business rules. Must run while the PDF is still open.
+                bs_periods = extraction_results["balance_sheet"].get("periods") or []
+                if bs_periods:
+                    notes_data = extract_balance_sheet_notes(pdf, bs_periods[0])
 
             if pages["cash_flow"] is not None:
                 extraction_results["cash_flow"] = extract_table(
@@ -103,9 +113,16 @@ class ExtractionService:
                 output_path=template_output_path,
                 cash_flow_data=extraction_results.get("cash_flow"),
                 p_and_l_data=extraction_results.get("p_and_l"),
+                notes_data=notes_data,
             )
 
-        logger.info("extraction_completed", job_id=job_id, output=output_filename)
+        elapsed = time.perf_counter() - t_total_start
+        logger.info(
+            "extraction_completed",
+            job_id=job_id,
+            output=output_filename,
+            time_taken=self._format_duration(elapsed),
+        )
 
         result = {
             "job_id": job_id,
@@ -132,6 +149,16 @@ class ExtractionService:
             result["template_output_filename"] = template_output_filename
 
         return result
+
+    @staticmethod
+    def _format_duration(seconds: float) -> str:
+        if seconds < 60:
+            return f"{seconds:.1f} sec"
+        minutes = int(seconds // 60)
+        remaining_seconds = int(seconds % 60)
+        if remaining_seconds == 0:
+            return f"{minutes} min"
+        return f"{minutes} min {remaining_seconds} sec"
 
     def get_output_path(self, rel_path: str) -> str:
         return self._get_abs_path(rel_path)
